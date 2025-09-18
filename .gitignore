@@ -9,4 +9,8 @@ build/
 .idea/
 .idea.bak/
 .DS_Store
+.settings/
 
+# Build outputs
+bin/
+out/
