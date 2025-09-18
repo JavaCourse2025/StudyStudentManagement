@@ -1,0 +1,12 @@
+# Gradle files
+.gradle/
+build/
+*.jar
+*.war
+*.iml
+
+# IDE files
+.idea/
+.idea.bak/
+.DS_Store
+
