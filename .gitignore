@@ -14,3 +14,6 @@ build/
 # Build outputs
 bin/
 out/
+
+# gradle-wrapper.properties
+gradle/wrapper/gradle-wrapper.properties
