@@ -5,6 +5,10 @@ build/
 *.war
 *.iml
 
+# Gradle wrapper を例外化（*.jar による無視を解除）
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
 # IDE files
 .idea/
 .idea.bak/
@@ -14,6 +18,3 @@ build/
 # Build outputs
 bin/
 out/
-
-# gradle-wrapper.properties
-gradle/wrapper/gradle-wrapper.properties
