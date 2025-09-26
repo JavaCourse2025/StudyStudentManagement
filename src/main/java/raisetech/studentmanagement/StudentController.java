@@ -1,86 +1,71 @@
 package raisetech.studentmanagement;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 public class StudentController {
-    private String name = "Mayuka Sasaki";
-    private String age = "31";
-    private final Map<String, String> studentScores;
 
-    public StudentController() {
-        this.studentScores = new ConcurrentHashMap<>();
-        this.studentScores.put("math", "85");
-        this.studentScores.put("english", "92");
+    private final StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
+
 
     @GetMapping("/name")
     public String hello() {
-        return name;
+        return studentService.getName();
     }
 
     @GetMapping("/studentInfo")
     public String getStudentInfo() {
-        return name + " " + age + "歳";
-
+        return studentService.getName() + " " + studentService.getAge() + "歳";
     }
 
-    //成績全体の取得
     @GetMapping("/scores")
     public Map<String, String> getScore() {
-        return studentScores;
+        return studentService.getScores();
     }
 
-    // 基本情報に成績も合わせて表示
-    @GetMapping("studentInfoWithScore")
+    @GetMapping("/studentInfoWithScore")
     public String getInfoWithScore() {
-        String info = name + " " + age + "歳";
-        info += " | 成績: " + studentScores.toString();
+        String info = studentService.getName() + " " + studentService.getAge() + "歳";
+        info += " | 成績: " + studentService.getScores().toString();
         return info;
     }
 
+
     @PostMapping("/studentName")
     public String updateStudentName(@RequestParam String newName) {
-        this.name = newName;
+        studentService.updateName(newName);
         return "名前が「" + newName + "」に更新されました。";
-
-
     }
 
     @PostMapping("/studentAge")
     public String updateStudentAge(@RequestParam String newAge) {
-        this.age = newAge;
+        studentService.updateAge(newAge);
         return "年齢が「" + newAge + "」に更新されました";
-
-
     }
 
     @PostMapping("/reset")
     public String resetData() {
-        this.name = "Mayuka Sasaki";
-        this.age = "31";
-        this.studentScores.clear();
-        this.studentScores.put("math", "85");
-        this.studentScores.put("english", "92");
-        return "データを初期化（" + "Mayuka Sasaki" + " , " + 31 + "歳、成績）もリセットしました。";
-
-
+        studentService.resetData();
+        return "データを初期化（" + studentService.getName() + " , " + studentService.getAge() + "歳、成績もリセットしました。）";
     }
 
-    // 個別成績の更新
     @PostMapping("/scores/update")
     public String updateScore(
             @RequestParam String subject,
             @RequestParam String score
     ) {
-        this.studentScores.put(subject, score);
+        studentService.updateScore(subject, score);
         return "成績が更新されました：" + subject + "=" + score;
-
     }
 }
