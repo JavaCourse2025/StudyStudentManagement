@@ -1,29 +1,23 @@
-package raisetech.StudentManagement;
+package raisetech.studentmanagement;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-@SpringBootApplication
 @RestController
-public class StudentManagementApplication {
-
+public class StudentController {
     private String name = "Mayuka Sasaki";
     private String age = "31";
+    private final Map<String, String> studentScores;
 
-    private final Map<String, String> studentScores = new HashMap<>() {{
-        put("math", "85");
-        put("english", "92");
-    }};
-
-    public static void main(String[] args) {
-        SpringApplication.run(StudentManagementApplication.class, args);
+    public StudentController() {
+        this.studentScores = new ConcurrentHashMap<>();
+        this.studentScores.put("math", "85");
+        this.studentScores.put("english", "92");
     }
 
     @GetMapping("/name")
@@ -71,7 +65,10 @@ public class StudentManagementApplication {
     public String resetData() {
         this.name = "Mayuka Sasaki";
         this.age = "31";
-        return "データを初期化（" + "Mayuka Sasaki" + " , " + 31 + "歳）にリセットしました。";
+        this.studentScores.clear();
+        this.studentScores.put("math", "85");
+        this.studentScores.put("english", "92");
+        return "データを初期化（" + "Mayuka Sasaki" + " , " + 31 + "歳、成績）もリセットしました。";
 
 
     }
@@ -86,5 +83,4 @@ public class StudentManagementApplication {
         return "成績が更新されました：" + subject + "=" + score;
 
     }
-
 }
