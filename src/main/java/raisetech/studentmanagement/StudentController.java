@@ -1,5 +1,6 @@
 package raisetech.studentmanagement;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,6 +11,12 @@ import java.util.Map;
 @RestController
 public class StudentController {
 
+    private final StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @GetMapping("/name")
     public String hello() {
@@ -23,7 +30,7 @@ public class StudentController {
 
     @GetMapping("/scores")
     public Map<String, String> getScore() {
-        return Map.of("math", "85", "english", "92");
+        return studentService.getScores();
     }
 
     @GetMapping("/studentInfoWithScore")
