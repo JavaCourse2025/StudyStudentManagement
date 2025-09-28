@@ -35,24 +35,24 @@ public class StudentController {
 
     @GetMapping("/studentInfoWithScore")
     public String getInfoWithScore() {
-        return "Mayuka Sasaki 31歳 | 成績: {math=85, english=92}";
+        return studentService.getStudentInfoWithScore();
 
     }
 
 
     @PostMapping("/studentName")
     public String updateStudentName(@RequestParam String newName) {
-        return "名前が「" + newName + "」に更新されました。";
+        return studentService.updateStudentName(newName);
     }
 
     @PostMapping("/studentAge")
     public String updateStudentAge(@RequestParam String newAge) {
-        return "年齢が「" + newAge + "」に更新されました";
+        return studentService.updateStudentAge(newAge);
     }
 
     @PostMapping("/reset")
     public String resetData() {
-        return "データを初期化（Mayuka Sasaki , 31歳、成績もリセットしました。）";
+        return studentService.resetData();
 
     }
 
@@ -61,6 +61,6 @@ public class StudentController {
             @RequestParam String subject,
             @RequestParam String score
     ) {
-        return "成績が更新されました：" + subject + "=" + score;
+        return studentService.updateScore(subject, score);
     }
 }
