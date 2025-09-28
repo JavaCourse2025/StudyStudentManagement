@@ -20,12 +20,12 @@ public class StudentController {
 
     @GetMapping("/name")
     public String hello() {
-        return "Mayuka Sasaki";
+        return studentService.getName();
     }
 
     @GetMapping("/studentInfo")
     public String getStudentInfo() {
-        return "Mayuka Sasaki 31歳";
+        return studentService.getName() + " " + studentService.getAge() + "歳";
     }
 
     @GetMapping("/scores")
