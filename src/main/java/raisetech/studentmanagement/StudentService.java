@@ -19,24 +19,43 @@ public class StudentService {
     public Map<String, String> getScores() {
         return Map.of("math", "85", "english", "92");
 
+
     }
 
-    // TODO: ステートレス化のため現在は空実装。将来的に外部ストレージとの連携ロジックをここに実装する。
-    public void updateName(String newName) {
+
+    public String getStudentInfo() {
+        return getName() + " " + getAge() + "歳";
     }
 
-    // TODO: ステートレス化のため現在は空実装。
-    public void updateAge(String newAge) { // ★ 追加
+    // GET /studentInfoWithScore の文字列生成を委譲
+    public String getStudentInfoWithScore() {
+        // TODO: 現在 no-op。将来永続化/状態管理を実装予定。
+        return getStudentInfo() + " | 成績: " + getScores();
     }
 
-    // TODO: ステートレス化のため現在は空実装。
-    public void updateScore(String subject, String score) {
+    // POST /studentName のメッセージ生成を委譲 (Stringを返すことで型を解決)
+    public String updateStudentName(String newName) {
+        // TODO: 現在 no-op。将来永続化/状態管理を実装予定。
+        return "名前が「" + newName + "」に更新されました。";
     }
 
-    // TODO: ステートレス化のため現在は空実装。
-    public void resetData() {
+    // POST /studentAge のメッセージ生成を委譲 (Stringを返すことで型を解決)
+    public String updateStudentAge(String newAge) {
+        // TODO: 現在 no-op。将来永続化/状態管理を実装予定。
+        return "年齢が「" + newAge + "」に更新されました";
+    }
 
+    // POST /reset のメッセージ生成を委譲 (Stringを返すことで型を解決)
+    public String resetData() {
+        // TODO: 現在 no-op。将来永続化/状態管理を実装予定。
+        return "データを初期化しました。"; // Controllerが期待するメッセージ
+    }
 
+    // POST /scores/update のメッセージ生成を委譲 (Stringを返すことで型を解決)
+    public String updateScore(String subject, String score) {
+        // TODO: 現在 no-op。将来永続化/状態管理を実装予定。
+        return "成績が更新されました：" + subject + "=" + score;
     }
 }
+
 
