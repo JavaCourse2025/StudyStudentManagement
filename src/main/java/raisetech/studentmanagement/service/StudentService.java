@@ -10,7 +10,6 @@ import raisetech.studentmanagement.repository.StudentRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -32,10 +31,7 @@ public class StudentService {
                 .orElse(Collections.emptyList());
 
         //kadai 絞り込み検索30代のみ抽出。リストをコントローラーに返す。
-
-        return allStudents.stream()
-                .filter(student -> student.getAge() >= 30 && student.getAge() <= 39)
-                .collect(Collectors.toList());
+        return allStudents;
     }
 
     public List<StudentsCourses> searchStudentCourses() {
@@ -43,11 +39,6 @@ public class StudentService {
         List<StudentsCourses> allCourses = Optional.ofNullable(studentCoursesRepository.search())
                 .orElse(Collections.emptyList());
         //kadai2絞り込み検索『Javaコース』のコース情報のみ抽出しリストをコントローラーに返す。
-        return allCourses.stream()
-                .filter(studentsCourses -> Optional.ofNullable(studentsCourses.getCourseName())
-                        .map(String::trim)
-                        .filter("Javaコース"::equals)
-                        .isPresent())
-                .collect(Collectors.toList());
+        return allCourses;
     }
 }
