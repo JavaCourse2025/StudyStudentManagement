@@ -14,8 +14,8 @@ import java.util.Optional;
 @Service
 public class StudentService {
 
-    private StudentRepository studentRepository;
-    private StudentCoursesRepository studentCoursesRepository;
+    private final StudentRepository studentRepository;
+    private final StudentCoursesRepository studentCoursesRepository;
 
     @Autowired
     public StudentService(
