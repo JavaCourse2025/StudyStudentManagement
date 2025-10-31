@@ -39,7 +39,7 @@ public class StudentService {
         List<StudentsCourses> allCourses = studentCoursesRepository.search();
         //kadai2絞り込み検索『Javaコース』のコース情報のみ抽出しリストをコントローラーに返す。
         return allCourses.stream()
-                .filter(studentsCourses -> "Javaコース".equals(studentsCourses.getCourseName()))
+                .filter(studentsCourses -> "Javaコース".equals(studentsCourses.getCourseName().trim()))
                 .collect(Collectors.toList());
     }
 }
