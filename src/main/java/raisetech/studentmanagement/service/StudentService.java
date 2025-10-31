@@ -8,6 +8,7 @@ import raisetech.studentmanagement.repository.StudentCoursesRepository;
 import raisetech.studentmanagement.repository.StudentRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -24,14 +25,21 @@ public class StudentService {
     }
 
     public List<Student> searchStudentList() {
-        //ここで何かしらの処理を行う
+        //DBから全学生データ取得
+        List<Student> allStudents = studentRepository.search();
         //kadai 絞り込み検索30代のみ抽出。リストをコントローラーに返す。
-        return studentRepository.search();
+
+        return allStudents.stream()
+                .filter(student -> student.getAge() >= 30 && student.getAge() <= 39)
+                .collect(Collectors.toList());
     }
 
     public List<StudentsCourses> searchStudentCourses() {
-        //ここで何かしらの処理を行う
+        //DBから全コースデータ取得
+        List<StudentsCourses> allCourses = studentCoursesRepository.search();
         //kadai2絞り込み検索『Javaコース』のコース情報のみ抽出しリストをコントローラーに返す。
-        return studentCoursesRepository.search();
+        return allCourses.stream()
+                .filter(studentsCourses -> "Javaコース".equals(studentsCourses.getCourseName()))
+                .collect(Collectors.toList());
     }
 }
