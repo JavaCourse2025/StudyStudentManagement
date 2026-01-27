@@ -28,7 +28,7 @@ public class StudentService {
         return studentRepository.search();
     }
 
-    public List<StudentsCourses> searchStudentCourses() {
+    public List<StudentsCourses> searchStudentCoursesList() {
         //何かしらの処理
         return studentCoursesRepository.search();
     }

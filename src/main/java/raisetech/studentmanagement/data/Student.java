@@ -16,5 +16,9 @@ public class Student {
     private String region;
     private String gender;
     private int age;
+    //kadai　DB上のstudentsテーブルに追加＋値を引っ張ってこれるようにオブジェクトも変更
+    //private String remark;
+    //private boolean isDeleted;
+    //DB項目追加はALTER TABLEを使う
 }
 
