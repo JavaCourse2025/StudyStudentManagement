@@ -10,15 +10,15 @@ import java.util.List;
 @RestController
 public class StudentCoursesController {
 
-    private final StudentService service;
+    private StudentService service;
 
     public StudentCoursesController(StudentService service) {
         this.service = service;
     }
 
     @GetMapping("/studentsCoursesList")
-    public List<StudentsCourses> getStudentCourses() {
-        return service.searchStudentCourses();
+    public List<StudentsCourses> getStudentCoursesList() {
+        return service.searchStudentCoursesList();
 
     }
 }
