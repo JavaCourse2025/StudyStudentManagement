@@ -2,6 +2,7 @@ package raisetech.studentmanagement.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import raisetech.studentmanagement.data.Student;
 import raisetech.studentmanagement.data.StudentsCourses;
 import raisetech.studentmanagement.domain.StudentDetail;
@@ -35,6 +36,7 @@ public class StudentService {
         return studentCoursesRepository.search();
     }
 
+    @Transactional
     public void registerStudent(StudentDetail studentDetail) {
         //生徒登録
         studentRepository.insertStudent(studentDetail.getStudent());
