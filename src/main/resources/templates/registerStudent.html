@@ -15,6 +15,10 @@
         <input type="text" id="email" th:field="*{student.email}"/>
     </div>
     <div>
+        <label for="courseName">コース名</label>
+        <input type="text" id="courseName" th:field="*{studentsCourses[0].courseName}"/>
+    </div>
+    <div>
         <button type="submit">登録</button>
     </div>
 </form>

@@ -21,4 +21,5 @@ public class StudentCoursesController {
         return service.searchStudentCoursesList();
 
     }
+
 }

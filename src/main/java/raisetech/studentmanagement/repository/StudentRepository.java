@@ -19,5 +19,3 @@ public interface StudentRepository {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertStudent(Student student);
 }
-
-

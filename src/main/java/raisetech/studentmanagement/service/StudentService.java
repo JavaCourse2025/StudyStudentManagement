@@ -8,6 +8,7 @@ import raisetech.studentmanagement.domain.StudentDetail;
 import raisetech.studentmanagement.repository.StudentCoursesRepository;
 import raisetech.studentmanagement.repository.StudentRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -35,6 +36,15 @@ public class StudentService {
     }
 
     public void registerStudent(StudentDetail studentDetail) {
+        //生徒登録
         studentRepository.insertStudent(studentDetail.getStudent());
+        //コース情報を取り出して処理
+        studentDetail.getStudentsCourses().forEach(courses -> {
+            courses.setStudentId(studentDetail.getStudent().getId());
+            courses.setStartDate(LocalDate.now());
+            courses.setScheduledEndDate(LocalDate.now().plusYears(1));
+            studentCoursesRepository.insertCourse(courses);
+
+        });
     }
 }

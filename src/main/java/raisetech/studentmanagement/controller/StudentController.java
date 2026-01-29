@@ -39,7 +39,11 @@ public class StudentController {
 
     @GetMapping("/newStudent")
     public String newStudent(Model model) {
-        model.addAttribute("studentDetail", new StudentDetail());
+        StudentDetail studentDetail = new StudentDetail();
+        studentDetail.setStudent(new Student());
+        studentDetail.setStudentsCourses(new java.util.ArrayList<>());
+        studentDetail.getStudentsCourses().add(new StudentsCourses());
+        model.addAttribute("studentDetail", studentDetail);
         return "registerStudent";
     }
 
