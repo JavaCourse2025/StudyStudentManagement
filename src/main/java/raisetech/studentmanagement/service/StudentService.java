@@ -47,6 +47,12 @@ public class StudentService {
             courses.setScheduledEndDate(LocalDate.now().plusYears(1));
             studentCoursesRepository.insertCourse(courses);
 
+
+            //アップデート
+            //HTMLで受講生更新画面作成（registerStudentほぼコピペでOK）
+            //StudentListの名前みたいなところAタグでリンクが作れる
+            //名前をリンクするとId情報に基づいた画面を表示する
+            //GetmappingでupdateStudentを作ってリストのId情報を受け取って単一の検索のリポジトリから更新されたもの表示
         });
     }
 }
