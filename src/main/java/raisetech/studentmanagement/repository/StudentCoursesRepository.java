@@ -16,5 +16,9 @@ public interface StudentCoursesRepository {
             "VALUES (#{studentId}, #{courseName}, #{startDate}, #{scheduledEndDate})")
     void insertCourse(StudentsCourses courses);
 
+    // StudentCoursesRepository の中に書くイメージ
+    @Select("SELECT * FROM students_courses WHERE student_id = #{id}")
+    List<StudentsCourses> searchStudentCourse(int id);
+
 
 }

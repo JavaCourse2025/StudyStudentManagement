@@ -47,13 +47,17 @@ public class StudentService {
             courses.setScheduledEndDate(LocalDate.now().plusYears(1));
             studentCoursesRepository.insertCourse(courses);
 
-
-            //アップデート
-            //HTMLで受講生更新画面作成（registerStudentほぼコピペでOK）
-            //StudentListの名前みたいなところAタグでリンクが作れる
-            //名前をリンクするとId情報に基づいた画面を表示する
-            //GetmappingでupdateStudentを作ってリストのId情報を受け取って単一の検索のリポジトリから更新されたもの表示
         });
+    }
+
+    public StudentDetail searchStudent(int id) {
+        // 1. IDを使って、リポジトリから生徒1人分を取得する
+        Student student = studentRepository.searchStudent(id);
+        // 2. IDを使って、その生徒が受講しているコースのリストを取得する
+        List<StudentsCourses> studentsCourses = studentCoursesRepository.searchStudentCourse(id);
+
+        // 3. 取得した2つをセットにして返す
+        return new StudentDetail(student, studentsCourses);
     }
 }
 

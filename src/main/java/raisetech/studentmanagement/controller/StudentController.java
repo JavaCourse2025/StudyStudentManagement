@@ -57,5 +57,19 @@ public class StudentController {
         System.out.println(studentDetail.getStudent().getFullName() + "さんが新規受講生として登録されました。");
         return "redirect:/studentList";
     }
-}
 
+    @GetMapping("/updateStudent")
+    public String updateStudent(Student student, Model model) {
+        // IDを使って、特定の受講生情報をサービスから取ってくる
+        StudentDetail studentDetail = service.searchStudent(student.getId());
+        // 取ってきたデータを画面に渡す
+        model.addAttribute("studentDetail", studentDetail);
+        //コピペで作った updateStudent.html を表示する
+        return "updateStudent";
+    }
+}
+//アップデート
+//HTMLで受講生更新画面作成（registerStudentほぼコピペでOK）
+//StudentListの名前みたいなところAタグでリンクが作れる
+//名前をリンクするとId情報に基づいた画面を表示する
+//GetmappingでupdateStudentを作ってリストのId情報を受け取って単一の検索のリポジトリから更新されたもの表示

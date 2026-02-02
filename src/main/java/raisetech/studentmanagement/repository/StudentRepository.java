@@ -18,6 +18,10 @@ public interface StudentRepository {
             "VALUES (#{fullName}, #{furigana}, #{nickName}, #{email}, #{region}, #{age}, #{gender}, #{remark}, false)")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertStudent(Student student);
+
+    // StudentRepository の中に書くイメージ
+    @Select("SELECT * FROM students WHERE id = #{id}")
+    Student searchStudent(int id);
 }
 
 
