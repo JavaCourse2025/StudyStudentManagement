@@ -59,5 +59,16 @@ public class StudentService {
         // 3. 取得した2つをセットにして返す
         return new StudentDetail(student, studentsCourses);
     }
+
+    @Transactional
+    public void updateStudent(StudentDetail studentDetail) {
+        // 生徒の基本情報を上書き保存
+        studentRepository.updateStudent(studentDetail.getStudent());
+
+        // コース情報を1つずつ上書き保存
+        for (StudentsCourses course : studentDetail.getStudentsCourses()) {
+            studentCoursesRepository.updateCourse(course);
+        }
+    }
 }
 

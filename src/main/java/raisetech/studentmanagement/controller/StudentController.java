@@ -67,6 +67,15 @@ public class StudentController {
         //コピペで作った updateStudent.html を表示する
         return "updateStudent";
     }
+
+    @PostMapping("/updateStudent")
+    public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+        if (result.hasErrors()) {
+            return "updateStudent";
+        }
+        service.updateStudent(studentDetail);
+        return "redirect:/studentList";
+    }
 }
 //アップデート
 //HTMLで受講生更新画面作成（registerStudentほぼコピペでOK）

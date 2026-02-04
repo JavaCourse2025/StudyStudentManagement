@@ -3,6 +3,7 @@ package raisetech.studentmanagement.repository;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import raisetech.studentmanagement.data.StudentsCourses;
 
 import java.util.List;
@@ -20,5 +21,7 @@ public interface StudentCoursesRepository {
     @Select("SELECT * FROM students_courses WHERE student_id = #{id}")
     List<StudentsCourses> searchStudentCourse(int id);
 
-
+    @Update("UPDATE students_courses SET course_name = #{courseName} " +
+            "WHERE id = #{id}")
+    void updateCourse(StudentsCourses course);
 }

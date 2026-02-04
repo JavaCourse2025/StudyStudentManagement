@@ -1,9 +1,6 @@
 package raisetech.studentmanagement.repository;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import raisetech.studentmanagement.data.Student;
 
 import java.util.List;
@@ -22,6 +19,11 @@ public interface StudentRepository {
     // StudentRepository の中に書くイメージ
     @Select("SELECT * FROM students WHERE id = #{id}")
     Student searchStudent(int id);
+
+    @Update("UPDATE students SET full_name = #{fullName}, furigana = #{furigana}, nickname = #{nickName}, " +
+            "email = #{email}, region = #{region}, age = #{age}, gender = #{gender}, remark = #{remark} " +
+            "WHERE id = #{id}")
+    void updateStudent(Student student);
 }
 
 
