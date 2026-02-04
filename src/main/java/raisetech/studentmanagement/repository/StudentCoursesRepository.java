@@ -24,6 +24,6 @@ public interface StudentCoursesRepository {
             "WHERE id = #{id}")
     void updateCourse(StudentsCourses course);
 
-    @Update("UPDATE students_courses SET course_name = #{courseName}, is_deleted = #{isDeleted} WHERE student_id = #{studentId}")
+    @Update("UPDATE students_courses SET course_name = #{courseName}, is_deleted = #{deleted} WHERE id = #{id}")
     void updateStudentCourse(StudentsCourses course);
 }

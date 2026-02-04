@@ -13,14 +13,6 @@ public class StudentsCourses {
     private String courseName;
     private LocalDate startDate;
     private LocalDate scheduledEndDate;
-    private boolean isDeleted;
+    private boolean deleted;
 
-    // StudentsCourses.java の中に貼り付け
-    public boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 }
