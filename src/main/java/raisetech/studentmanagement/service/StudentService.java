@@ -51,23 +51,27 @@ public class StudentService {
     }
 
     public StudentDetail searchStudent(int id) {
-        // 1. IDを使って、リポジトリから生徒1人分を取得する
         Student student = studentRepository.searchStudent(id);
-        // 2. IDを使って、その生徒が受講しているコースのリストを取得する
         List<StudentsCourses> studentsCourses = studentCoursesRepository.searchStudentCourse(id);
-
-        // 3. 取得した2つをセットにして返す
         return new StudentDetail(student, studentsCourses);
     }
 
     @Transactional
     public void updateStudent(StudentDetail studentDetail) {
-        // 生徒の基本情報を上書き保存
         studentRepository.updateStudent(studentDetail.getStudent());
-
-        // コース情報を1つずつ上書き保存
         for (StudentsCourses course : studentDetail.getStudentsCourses()) {
-            studentCoursesRepository.updateCourse(course);
+            if (course.getCourseName() == null || course.getCourseName().isBlank()) {
+                continue;
+            }
+            if (course.getId() == 0) {
+                course.setStudentId(studentDetail.getStudent().getId());
+                course.setStartDate(LocalDate.now());
+                course.setScheduledEndDate(LocalDate.now().plusYears(1));
+                studentCoursesRepository.insertCourse(course);
+            } else {
+                studentCoursesRepository.updateStudentCourse(course);
+            }
+
         }
     }
 }

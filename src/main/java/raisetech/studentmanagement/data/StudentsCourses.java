@@ -13,4 +13,6 @@ public class StudentsCourses {
     private String courseName;
     private LocalDate startDate;
     private LocalDate scheduledEndDate;
+    private boolean deleted;
+
 }

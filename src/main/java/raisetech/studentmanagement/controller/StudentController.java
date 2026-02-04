@@ -60,11 +60,10 @@ public class StudentController {
 
     @GetMapping("/updateStudent")
     public String updateStudent(Student student, Model model) {
-        // IDを使って、特定の受講生情報をサービスから取ってくる
+
         StudentDetail studentDetail = service.searchStudent(student.getId());
-        // 取ってきたデータを画面に渡す
+        studentDetail.getStudentsCourses().add(new StudentsCourses());
         model.addAttribute("studentDetail", studentDetail);
-        //コピペで作った updateStudent.html を表示する
         return "updateStudent";
     }
 
@@ -77,8 +76,3 @@ public class StudentController {
         return "redirect:/studentList";
     }
 }
-//アップデート
-//HTMLで受講生更新画面作成（registerStudentほぼコピペでOK）
-//StudentListの名前みたいなところAタグでリンクが作れる
-//名前をリンクするとId情報に基づいた画面を表示する
-//GetmappingでupdateStudentを作ってリストのId情報を受け取って単一の検索のリポジトリから更新されたもの表示
