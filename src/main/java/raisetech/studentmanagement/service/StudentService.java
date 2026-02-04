@@ -60,11 +60,16 @@ public class StudentService {
     public void updateStudent(StudentDetail studentDetail) {
         studentRepository.updateStudent(studentDetail.getStudent());
         for (StudentsCourses course : studentDetail.getStudentsCourses()) {
-            course.setStudentId(studentDetail.getStudent().getId());
-            studentCoursesRepository.updateStudentCourse(course);
+            if (course.getId() == 0) {
+                course.setStudentId(studentDetail.getStudent().getId());
+                course.setStartDate(LocalDate.now());
+                course.setScheduledEndDate(LocalDate.now().plusYears(1));
+                studentCoursesRepository.insertCourse(course);
+            } else {
+                studentCoursesRepository.updateStudentCourse(course);
+            }
+
         }
-
-
     }
 }
 
