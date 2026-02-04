@@ -60,6 +60,9 @@ public class StudentService {
     public void updateStudent(StudentDetail studentDetail) {
         studentRepository.updateStudent(studentDetail.getStudent());
         for (StudentsCourses course : studentDetail.getStudentsCourses()) {
+            if (course.getCourseName() == null || course.getCourseName().isBlank()) {
+                continue;
+            }
             if (course.getId() == 0) {
                 course.setStudentId(studentDetail.getStudent().getId());
                 course.setStartDate(LocalDate.now());

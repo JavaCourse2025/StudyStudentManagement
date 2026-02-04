@@ -20,10 +20,6 @@ public interface StudentCoursesRepository {
     @Select("SELECT * FROM students_courses WHERE student_id = #{id}")
     List<StudentsCourses> searchStudentCourse(int id);
 
-    @Update("UPDATE students_courses SET course_name = #{courseName} " +
-            "WHERE id = #{id}")
-    void updateCourse(StudentsCourses course);
-
     @Update("UPDATE students_courses SET course_name = #{courseName}, is_deleted = #{deleted} WHERE id = #{id}")
     void updateStudentCourse(StudentsCourses course);
 }
