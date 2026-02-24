@@ -1,12 +1,10 @@
 package raisetech.studentmanagement.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import raisetech.studentmanagement.controller.converter.StudentConverter;
 import raisetech.studentmanagement.data.Student;
 import raisetech.studentmanagement.data.StudentsCourses;
@@ -15,7 +13,7 @@ import raisetech.studentmanagement.service.StudentService;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class StudentController {
     private StudentService service;
     private StudentConverter converter;
@@ -27,13 +25,11 @@ public class StudentController {
     }
 
     @GetMapping("/studentList")
-    public String getStudentList(Model model) {
-        //リクエストの加工処理、入力チェックとか
+    public List<StudentDetail> getStudentList() {
         List<Student> students = service.searchStudentList();
         List<StudentsCourses> studentsCourses = service.searchStudentCoursesList();
 
-        model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
-        return "studentList";
+        return converter.convertStudentDetails(students, studentsCourses);
 
     }
 
@@ -68,11 +64,8 @@ public class StudentController {
     }
 
     @PostMapping("/updateStudent")
-    public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
-        if (result.hasErrors()) {
-            return "updateStudent";
-        }
+    public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail) {
         service.updateStudent(studentDetail);
-        return "redirect:/studentList";
+        return ResponseEntity.ok("更新処理が成功しました。");
     }
 }
