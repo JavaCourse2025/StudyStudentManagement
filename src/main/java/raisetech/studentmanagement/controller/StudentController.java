@@ -1,5 +1,6 @@
 package raisetech.studentmanagement.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +13,6 @@ import raisetech.studentmanagement.data.Student;
 import raisetech.studentmanagement.data.StudentsCourses;
 import raisetech.studentmanagement.domain.StudentDetail;
 import raisetech.studentmanagement.service.StudentService;
-
-import java.util.List;
 
 @Controller
 public class StudentController {
@@ -28,13 +27,11 @@ public class StudentController {
 
     @GetMapping("/studentList")
     public String getStudentList(Model model) {
-        //リクエストの加工処理、入力チェックとか
-        List<Student> students = service.searchStudentList();
-        List<StudentsCourses> studentsCourses = service.searchStudentCoursesList();
+        java.util.List<Student> students = service.searchStudentList();
+        java.util.List<StudentsCourses> studentsCourses = service.searchStudentCoursesList();
 
         model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
-        return "studentList";
-
+        return "studentList"; // studentList.html を表示する
     }
 
     @GetMapping("/newStudent")
@@ -60,7 +57,6 @@ public class StudentController {
 
     @GetMapping("/updateStudent")
     public String updateStudent(Student student, Model model) {
-
         StudentDetail studentDetail = service.searchStudent(student.getId());
         studentDetail.getStudentsCourses().add(new StudentsCourses());
         model.addAttribute("studentDetail", studentDetail);
@@ -68,7 +64,8 @@ public class StudentController {
     }
 
     @PostMapping("/updateStudent")
-    public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+    public String updateStudent(@ModelAttribute @Valid StudentDetail studentDetail, BindingResult result, Model model) {
+        // もし入力ミス（バリデーションエラー）があったら、更新せずに編集画面に戻る
         if (result.hasErrors()) {
             return "updateStudent";
         }

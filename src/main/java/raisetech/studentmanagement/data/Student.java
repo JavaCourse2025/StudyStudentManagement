@@ -1,5 +1,6 @@
 package raisetech.studentmanagement.data;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +10,9 @@ import lombok.Setter;
 public class Student {
 
     private int id;
+    @NotBlank(message = "名前を入力してください")
     private String fullName;
+    @NotBlank(message = "フリガナを入力してください")
     private String furigana;
     private String nickName;
     private String email;
