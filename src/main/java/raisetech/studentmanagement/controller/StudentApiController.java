@@ -1,5 +1,6 @@
 package raisetech.studentmanagement.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import raisetech.studentmanagement.service.StudentService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api") // ← 先生が言ってた「プレフィックス（前につける文字）」だよ！
+@RequestMapping("/api")
 public class StudentApiController {
     private StudentService service;
     private StudentConverter converter;
@@ -23,7 +24,7 @@ public class StudentApiController {
         this.converter = converter;
     }
 
-    @GetMapping("/studentList")
+    @GetMapping("/students")
     public List<StudentDetail> getStudentList() {
         List<Student> students = service.searchStudentList();
         List<StudentsCourses> studentsCourses = service.searchStudentCoursesList();
@@ -31,8 +32,8 @@ public class StudentApiController {
         return converter.convertStudentDetails(students, studentsCourses);
     }
 
-    @PostMapping("/updateStudent")
-    public ResponseEntity<String> updateStudent(@RequestBody StudentDetail studentDetail) {
+    @PutMapping("/students")
+    public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail) {
         service.updateStudent(studentDetail);
         return ResponseEntity.ok("更新処理が成功しました。");
     }
