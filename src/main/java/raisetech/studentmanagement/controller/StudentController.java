@@ -24,6 +24,15 @@ public class StudentController {
         this.converter = converter;
     }
 
+    @GetMapping("/studentList")
+    public String getStudentList(Model model) {
+        java.util.List<Student> students = service.searchStudentList();
+        java.util.List<StudentsCourses> studentsCourses = service.searchStudentCoursesList();
+
+        model.addAttribute("studentList", converter.convertStudentDetails(students, studentsCourses));
+        return "studentList"; // studentList.html を表示する
+    }
+
     @GetMapping("/newStudent")
     public String newStudent(Model model) {
         StudentDetail studentDetail = new StudentDetail();

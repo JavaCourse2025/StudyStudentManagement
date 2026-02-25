@@ -11,6 +11,7 @@ import raisetech.studentmanagement.domain.StudentDetail;
 import raisetech.studentmanagement.service.StudentService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -32,9 +33,14 @@ public class StudentApiController {
         return converter.convertStudentDetails(students, studentsCourses);
     }
 
-    @PutMapping("/students")
-    public ResponseEntity<String> updateStudent(@RequestBody @Valid StudentDetail studentDetail) {
+    @PutMapping("/students/{id}")
+    public ResponseEntity<Map<String, String>> updateStudent(@PathVariable int id,
+                                                             @RequestBody @Valid StudentDetail studentDetail) {
+        studentDetail.getStudent().setId(id);
         service.updateStudent(studentDetail);
-        return ResponseEntity.ok("更新処理が成功しました。");
+
+        Map<String, String> response = new java.util.HashMap<>();
+        response.put("message", "更新処理が成功しました。");
+        return ResponseEntity.ok(response);
     }
 }
