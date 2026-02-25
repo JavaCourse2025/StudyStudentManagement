@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import raisetech.studentmanagement.controller.converter.StudentConverter;
 import raisetech.studentmanagement.data.Student;
 import raisetech.studentmanagement.data.StudentsCourses;
+import raisetech.studentmanagement.domain.ApiResponse;
 import raisetech.studentmanagement.domain.StudentDetail;
 import raisetech.studentmanagement.service.StudentService;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -34,13 +34,12 @@ public class StudentApiController {
     }
 
     @PutMapping("/students/{id}")
-    public ResponseEntity<Map<String, String>> updateStudent(@PathVariable int id,
-                                                             @RequestBody @Valid StudentDetail studentDetail) {
+    public ResponseEntity<ApiResponse> updateStudent(@PathVariable int id,
+                                                     @RequestBody @Valid StudentDetail studentDetail) {
         studentDetail.getStudent().setId(id);
         service.updateStudent(studentDetail);
 
-        Map<String, String> response = new java.util.HashMap<>();
-        response.put("message", "更新処理が成功しました。");
+        ApiResponse response = new ApiResponse(true, "更新処理が成功しました。", null);
         return ResponseEntity.ok(response);
     }
 }

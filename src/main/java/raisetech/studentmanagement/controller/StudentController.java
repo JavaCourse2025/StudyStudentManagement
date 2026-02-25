@@ -1,5 +1,6 @@
 package raisetech.studentmanagement.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,5 +61,15 @@ public class StudentController {
         studentDetail.getStudentsCourses().add(new StudentsCourses());
         model.addAttribute("studentDetail", studentDetail);
         return "updateStudent";
+    }
+
+    @PostMapping("/updateStudent")
+    public String updateStudent(@ModelAttribute @Valid StudentDetail studentDetail, BindingResult result, Model model) {
+        // もし入力ミス（バリデーションエラー）があったら、更新せずに編集画面に戻る
+        if (result.hasErrors()) {
+            return "updateStudent";
+        }
+        service.updateStudent(studentDetail);
+        return "redirect:/studentList";
     }
 }
