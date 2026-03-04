@@ -37,7 +37,7 @@ public class StudentService {
     }
 
     @Transactional
-    public void registerStudent(StudentDetail studentDetail) {
+    public StudentDetail registerStudent(StudentDetail studentDetail) {
         //生徒登録
         studentRepository.insertStudent(studentDetail.getStudent());
         //コース情報を取り出して処理
@@ -48,6 +48,7 @@ public class StudentService {
             studentCoursesRepository.insertCourse(courses);
 
         });
+        return studentDetail;
     }
 
     public StudentDetail searchStudent(int id) {

@@ -26,11 +26,28 @@ public class StudentApiController {
     }
 
     @GetMapping("/students")
-    public List<StudentDetail> getStudentList() {
+    public ResponseEntity<ApiResponse> getStudentList() {
         List<Student> students = service.searchStudentList();
         List<StudentsCourses> studentsCourses = service.searchStudentCoursesList();
+        List<StudentDetail> details = converter.convertStudentDetails(students, studentsCourses);
 
-        return converter.convertStudentDetails(students, studentsCourses);
+        ApiResponse response = new ApiResponse(true, "全件取得に成功しました", details);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/student/{id}")
+    public ResponseEntity<ApiResponse> getStudent(@PathVariable int id) {
+        StudentDetail detail = service.searchStudent(id);
+
+        ApiResponse response = new ApiResponse(true, "受講生の取得に成功しました。", detail);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/students")
+    public ResponseEntity<ApiResponse> registerStudent(@RequestBody @Valid StudentDetail studentDetail) {
+        StudentDetail registerDetail = service.registerStudent(studentDetail);
+        ApiResponse response = new ApiResponse(true, "受講生の登録に成功しました。", registerDetail);
+        return ResponseEntity.status(201).body(response);
     }
 
     @PutMapping("/students/{id}")
