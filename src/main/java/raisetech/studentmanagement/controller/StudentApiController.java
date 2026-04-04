@@ -13,6 +13,10 @@ import raisetech.studentmanagement.service.StudentService;
 
 import java.util.List;
 
+/**
+ * 受講生の検索、登録、更新などを行うためのREST APIコントローラーです。
+ * 全てのリクエストに対して、成功/失敗のメッセージを含むApiResponseを返却します。
+ */
 @RestController
 @RequestMapping("/api")
 public class StudentApiController {
@@ -25,6 +29,12 @@ public class StudentApiController {
         this.converter = converter;
     }
 
+    /**
+     * 受講生の一覧を全件取得します。
+     * 受講生の情報と、それぞれが受講しているコース情報を紐付けて返却します。
+     *
+     * @return 受講生詳細情報のリスト含むApiResponse
+     */
     @GetMapping("/students")
     public ResponseEntity<ApiResponse> getStudentList() {
         List<Student> students = service.searchStudentList();
@@ -35,6 +45,12 @@ public class StudentApiController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 指定されたIDに合致する受講生を1件取得します。
+     * *@param id 受講生ID
+     *
+     * @return 取得した受講生詳細情報を含むApiResponse
+     */
     @GetMapping("/student/{id}")
     public ResponseEntity<ApiResponse> getStudent(@PathVariable int id) {
         StudentDetail detail = service.searchStudent(id);
@@ -43,6 +59,13 @@ public class StudentApiController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 受講生の新規登録を行います。
+     * 受講生情報とコース情報を同時に登録し、完了後に登録されたデータを返却します。
+     * * @param studentDetail 登録する受講生詳細
+     *
+     * @return 登録完了後の受講生詳細情報を含むApiResponse
+     */
     @PostMapping("/students")
     public ResponseEntity<ApiResponse> registerStudent(@RequestBody @Valid StudentDetail studentDetail) {
         StudentDetail registerDetail = service.registerStudent(studentDetail);
@@ -50,6 +73,14 @@ public class StudentApiController {
         return ResponseEntity.status(201).body(response);
     }
 
+    /**
+     * 既存の受講生情報を更新します。
+     * パスで指定されたIDを元に対象を特定し、送られたデータで上書きします。
+     * * @param id　更新対象の受講生ID
+     *
+     * @param studentDetail 更新する受講生詳細
+     * @return 更新成功のメッセージを含むApiResponse
+     */
     @PutMapping("/students/{id}")
     public ResponseEntity<ApiResponse> updateStudent(@PathVariable int id,
                                                      @RequestBody @Valid StudentDetail studentDetail) {
